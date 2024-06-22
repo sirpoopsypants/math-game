@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bufxqq1lv8cnv"]
+
+[ext_resource type="Texture2D" uid="uid://etgw84cm4g7g" path="res://assets/afterimage.webp" id="1_7wxfm"]
+[ext_resource type="Script" path="res://scripts/afterimagebutreal.gd" id="2_ihfm0"]
+
+[node name="Sprite2D" type="Sprite2D"]
+modulate = Color(0.999, 1, 2, 0.506)
+show_behind_parent = true
+texture = ExtResource("1_7wxfm")
+script = ExtResource("2_ihfm0")

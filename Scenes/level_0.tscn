@@ -1,0 +1,94 @@
+[gd_scene load_steps=11 format=3 uid="uid://carfbi3854auw"]
+
+[ext_resource type="Texture2D" uid="uid://eci3jsuahe6i" path="res://assets/1tile.jpeg" id="1_26lms"]
+[ext_resource type="Script" path="res://scripts/level_0.gd" id="1_xluxm"]
+[ext_resource type="Texture2D" uid="uid://cphfwfn8fyfje" path="res://assets/real-MEo6ix_J9-transformed.png" id="2_1pcw8"]
+[ext_resource type="Texture2D" uid="uid://cpyc1h6a4ho1k" path="res://assets/higherflies.webp" id="3_7dray"]
+[ext_resource type="PackedScene" uid="uid://d0r7526j6e7wj" path="res://Scenes/higherflies.tscn" id="4_3jjld"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wv2gq"]
+texture = ExtResource("1_26lms")
+texture_region_size = Vector2i(1600, 1600)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_twxvu"]
+tile_size = Vector2i(1600, 1600)
+sources/1 = SubResource("TileSetAtlasSource_wv2gq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tyss6"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_min = 0.08
+scale_max = 0.08
+color = Color(0.086, 1, 3, 1)
+
+[sub_resource type="GDScript" id="GDScript_1tv8d"]
+script/source = "extends GPUParticles2D
+var d = 0
+var radius = 900
+var rotation_speed = 1.5
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	d += delta
+	position = Vector2(cos(d * rotation_speed) * radius, 
+	sin(d  * rotation_speed) * radius) 
+	print(position)
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o8kqs"]
+size = Vector2(192, 5864)
+
+[node name="Level0" type="Node2D"]
+script = ExtResource("1_xluxm")
+
+[node name="GraphTile" type="TileMap" parent="." groups=["blocks"]]
+texture_repeat = 2
+scale = Vector2(0.262, 0.262)
+tile_set = SubResource("TileSet_twxvu")
+format = 2
+layer_0/tile_data = PackedInt32Array(65535, 1, 0, -65536, 1, 0, 0, 1, 0, 65536, 1, 0, 131071, 1, 0, 131070, 1, 0, 65534, 1, 0, -2, 1, 0, -65538, 1, 0, -65537, 1, 0, -131072, 1, 0, -131071, 1, 0, -65535, 1, 0, 1, 1, 0, 65537, 1, 0, -131075, 1, 0, -196612, 1, 0, 196605, 1, 0, 262140, 1, 0, 131074, 1, 0, 196611, 1, 0, -196606, 1, 0, -262141, 1, 0, -196605, 1, 0, -131069, 1, 0, -65533, 1, 0, 3, 1, 0, 65539, 1, 0, 131075, 1, 0, 196610, 1, 0, 196609, 1, 0, 196608, 1, 0, 262143, 1, 0, 262142, 1, 0, 262141, 1, 0, 196604, 1, 0, 131068, 1, 0, 65532, 1, 0, -4, 1, 0, -65540, 1, 0, -131076, 1, 0, -196611, 1, 0, -196610, 1, 0, -196609, 1, 0, -262144, 1, 0, -262143, 1, 0, -262142, 1, 0, -196607, 1, 0, -196608, 1, 0, -131073, 1, 0, -131074, 1, 0, -65539, 1, 0, -3, 1, 0, 65533, 1, 0, 131069, 1, 0, 196606, 1, 0, 196607, 1, 0, 131072, 1, 0, 131073, 1, 0, 65538, 1, 0, 2, 1, 0, -65534, 1, 0, -131070, 1, 0, -262149, 1, 0, -327686, 1, 0, -393223, 1, 0, -327676, 1, 0, -393211, 1, 0, -458746, 1, 0, 327675, 1, 0, 393210, 1, 0, 458745, 1, 0, 262148, 1, 0, 327685, 1, 0, 393222, 1, 0, 458746, 1, 0, 458747, 1, 0, 458748, 1, 0, 458749, 1, 0, 458750, 1, 0, 458751, 1, 0, 393216, 1, 0, 393217, 1, 0, 393218, 1, 0, 393219, 1, 0, 393220, 1, 0, 393221, 1, 0, 327686, 1, 0, 262150, 1, 0, 196614, 1, 0, 131078, 1, 0, 65542, 1, 0, 6, 1, 0, -65530, 1, 0, -131066, 1, 0, -196602, 1, 0, -262138, 1, 0, -327674, 1, 0, -393210, 1, 0, -458747, 1, 0, -458748, 1, 0, -458749, 1, 0, -458750, 1, 0, -458751, 1, 0, -458752, 1, 0, -393217, 1, 0, -393218, 1, 0, -393219, 1, 0, -393220, 1, 0, -393221, 1, 0, -393222, 1, 0, -327687, 1, 0, -262151, 1, 0, -196615, 1, 0, -131079, 1, 0, -65543, 1, 0, -7, 1, 0, 65529, 1, 0, 131065, 1, 0, 196601, 1, 0, 262137, 1, 0, 327673, 1, 0, 393209, 1, 0, 393211, 1, 0, 393212, 1, 0, 393213, 1, 0, 393214, 1, 0, 393215, 1, 0, 327680, 1, 0, 327681, 1, 0, 327682, 1, 0, 327683, 1, 0, 327684, 1, 0, 262149, 1, 0, 196613, 1, 0, 131077, 1, 0, 65541, 1, 0, 5, 1, 0, -65531, 1, 0, -131067, 1, 0, -196603, 1, 0, -262139, 1, 0, -327675, 1, 0, -393212, 1, 0, -393213, 1, 0, -393214, 1, 0, -393215, 1, 0, -393216, 1, 0, -327681, 1, 0, -327682, 1, 0, -327683, 1, 0, -327684, 1, 0, -327685, 1, 0, -262150, 1, 0, -196614, 1, 0, -131078, 1, 0, -65542, 1, 0, -6, 1, 0, 65530, 1, 0, 131066, 1, 0, 196602, 1, 0, 262138, 1, 0, 327674, 1, 0, 327676, 1, 0, 327677, 1, 0, 327678, 1, 0, 327679, 1, 0, 262144, 1, 0, 262145, 1, 0, 262146, 1, 0, 262147, 1, 0, 196612, 1, 0, 131076, 1, 0, 65540, 1, 0, 4, 1, 0, -65532, 1, 0, -131068, 1, 0, -196604, 1, 0, -262140, 1, 0, -327677, 1, 0, -327678, 1, 0, -327679, 1, 0, -327680, 1, 0, -262145, 1, 0, -262146, 1, 0, -262147, 1, 0, -262148, 1, 0, -131077, 1, 0, -65541, 1, 0, -196613, 1, 0, -5, 1, 0, 65531, 1, 0, 131067, 1, 0, 196603, 1, 0, 262139, 1, 0, -1, 1, 0)
+
+[node name="UnitCircle" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(0.468, 0.468)
+texture = ExtResource("2_1pcw8")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="UnitCircle"]
+amount = 5
+process_material = SubResource("ParticleProcessMaterial_tyss6")
+texture = ExtResource("3_7dray")
+lifetime = 10.0
+visibility_rect = Rect2(-1000, -1000, 2000, 2000)
+local_coords = true
+trail_lifetime = 2.96
+trail_sections = 16
+script = SubResource("GDScript_1tv8d")
+
+[node name="worldboundary" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="worldboundary"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="worldboundary/StaticBody2D"]
+position = Vector2(-3037, -2)
+shape = SubResource("RectangleShape2D_o8kqs")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="worldboundary/StaticBody2D"]
+position = Vector2(3030, -27)
+shape = SubResource("RectangleShape2D_o8kqs")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="worldboundary/StaticBody2D"]
+position = Vector2(19, -3039)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_o8kqs")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="worldboundary/StaticBody2D"]
+position = Vector2(-3, 3026)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_o8kqs")
+
+[node name="higherflies" parent="." instance=ExtResource("4_3jjld")]
+position = Vector2(14, -862)
+
+[node name="boid_folder" type="Node2D" parent="."]

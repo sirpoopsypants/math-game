@@ -1,0 +1,58 @@
+[gd_scene load_steps=10 format=3 uid="uid://d0r7526j6e7wj"]
+
+[ext_resource type="Texture2D" uid="uid://cpyc1h6a4ho1k" path="res://assets/higherflies.webp" id="1_y7r8p"]
+[ext_resource type="Texture2D" uid="uid://t4ysr8exsjtr" path="res://assets/Drawing-3.sketchpad Cropped.png" id="2_xixkf"]
+
+[sub_resource type="Gradient" id="Gradient_mj2vo"]
+offsets = PackedFloat32Array(0, 0.182724, 0.408638, 0.637874, 0.877076)
+colors = PackedColorArray(0.076053, 3.34659e-08, 9.02452e-09, 1, 0.289596, 0.0114387, 0, 1, 0.83, 0.262833, 0, 1, 0.776471, 0, 0, 1, 0.634382, 0.34908, 5.77569e-07, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_nctkr"]
+gradient = SubResource("Gradient_mj2vo")
+
+[sub_resource type="Curve" id="Curve_palun"]
+_data = [Vector2(0, 0.984394), 0.0, 0.0, 0, 0, Vector2(0.99696, 0.243097), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_n60pv"]
+curve = SubResource("Curve_palun")
+
+[sub_resource type="Curve" id="Curve_5ucll"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.18845, 0.5006), 0.0, 0.0, 0, 0, Vector2(0.808511, 0.516207), 0.0, 0.0, 0, 0, Vector2(1, 0.133854), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_aspim"]
+curve = SubResource("Curve_5ucll")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_egouc"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 10.0
+emission_ring_radius = 300.0
+emission_ring_inner_radius = 0.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.01
+scale_max = 0.1
+scale_curve = SubResource("CurveTexture_aspim")
+color = Color(1.5, 1.081, 0, 1)
+color_ramp = SubResource("GradientTexture1D_nctkr")
+emission_curve = SubResource("CurveTexture_n60pv")
+
+[node name="higherflies" type="Node2D"]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+z_index = 5
+scale = Vector2(2.533, 2.134)
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_egouc")
+texture = ExtResource("1_y7r8p")
+lifetime = 3.0
+visibility_rect = Rect2(-200, -200, 400, 400)
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(-5.00003, 1.00002)
+scale = Vector2(2.69538, 2.22899)
+color = Color(1, 0.364706, 0, 1)
+energy = 0.9
+texture = ExtResource("2_xixkf")

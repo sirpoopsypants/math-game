@@ -1,0 +1,92 @@
+[gd_scene load_steps=12 format=3 uid="uid://qf3473eabek3"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_uxjt8"]
+[ext_resource type="Texture2D" uid="uid://bqthviy7n81l4" path="res://assets/triangle3.webp" id="2_5ro3j"]
+[ext_resource type="Texture2D" uid="uid://t4ysr8exsjtr" path="res://assets/Drawing-3.sketchpad Cropped.png" id="3_8rajc"]
+[ext_resource type="Script" path="res://scripts/Scene_camera.gd" id="4_sbmke"]
+[ext_resource type="Script" path="res://scripts/ObjectTrail.gd" id="5_5d6bm"]
+[ext_resource type="Texture2D" uid="uid://bukdtwk8hld2k" path="res://assets/Drawing-3.sketchpad.png" id="6_3e5y1"]
+
+[sub_resource type="Curve" id="Curve_qu0sc"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_jgaqf"]
+offsets = PackedFloat32Array(0, 0.346154, 1)
+colors = PackedColorArray(0.057, 1.4, 0.372, 1, 0, 0.823, 1.8, 1, 0, 0, 2, 1)
+
+[sub_resource type="Curve" id="Curve_qdf2g"]
+max_value = 3.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.0833333, 1.65345), 0.0, 0.0, 0, 0, Vector2(1, 0.207161), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_yyndu"]
+curve = SubResource("Curve_qdf2g")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bb7gh"]
+emission_shape_offset = Vector3(0, 131.155, 0)
+emission_shape_scale = Vector3(1.47, 1, 1)
+emission_shape = 1
+emission_sphere_radius = 36.74
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -100.0
+radial_accel_min = 68.24
+radial_accel_max = 115.35
+scale_min = 0.0
+scale_max = 0.3
+scale_curve = SubResource("CurveTexture_yyndu")
+scale_over_velocity_max = 988.24
+turbulence_noise_strength = 20.0
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_uxjt8")
+MAX_SPEED = 500
+ACCELERATION = 2000
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
+polygon = PackedVector2Array(-67, 37, 0, -78, 68, 37)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -12.485)
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("2_5ro3j")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+energy = 0.9
+shadow_enabled = true
+texture = ExtResource("3_8rajc")
+offset = Vector2(-9.785, 59.085)
+texture_scale = 1.82
+
+[node name="Scene_camera" type="Camera2D" parent="."]
+position_smoothing_speed = 1.0
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+script = ExtResource("4_sbmke")
+
+[node name="dash_timer" type="Timer" parent="."]
+process_callback = 0
+one_shot = true
+
+[node name="dash_cooldown" type="Timer" parent="."]
+
+[node name="trail" type="Line2D" parent="."]
+top_level = true
+width = 20.0
+width_curve = SubResource("Curve_qu0sc")
+gradient = SubResource("Gradient_jgaqf")
+script = ExtResource("5_5d6bm")
+MAX_LENGTH = 32
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+modulate = Color(1, 1, 1, 0.494118)
+rotation = 6.28319
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_bb7gh")
+texture = ExtResource("6_3e5y1")
+collision_base_size = 0.0
+trail_lifetime = 1.2
+
+[connection signal="timeout" from="dash_timer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="dash_cooldown" to="." method="_on_dash_cooldown_timeout"]

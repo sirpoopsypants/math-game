@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://bulmgc7gn026t"]
+
+[ext_resource type="Script" path="res://scripts/fpscounter.gd" id="1_hd27x"]
+
+[node name="FPSCOUNTER" type="ColorRect"]
+
+[node name="fpscounter" type="Label" parent="."]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 0
+offset_left = 17.0
+offset_top = 11.0
+offset_right = 246.0
+offset_bottom = 117.0
+scale = Vector2(2.42722, 2.34063)
+text = "100"
+script = ExtResource("1_hd27x")

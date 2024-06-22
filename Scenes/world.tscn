@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://omtcdepmic7u"]
+
+[ext_resource type="PackedScene" uid="uid://qf3473eabek3" path="res://Scenes/player.tscn" id="1_m1h5k"]
+[ext_resource type="PackedScene" uid="uid://carfbi3854auw" path="res://Scenes/level_0.tscn" id="2_hbyq2"]
+[ext_resource type="PackedScene" uid="uid://bulmgc7gn026t" path="res://Scenes/fpscounter.tscn" id="3_t5e35"]
+
+[sub_resource type="Environment" id="Environment_sglsv"]
+background_mode = 3
+glow_enabled = true
+glow_blend_mode = 1
+
+[node name="World" type="Node2D"]
+
+[node name="Debug" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="FPSCOUNTER" parent="Debug" instance=ExtResource("3_t5e35")]
+
+[node name="Player" parent="." instance=ExtResource("1_m1h5k")]
+unique_name_in_owner = true
+z_index = 1
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.325441, 0.325441, 0.325441, 1)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_sglsv")
+
+[node name="Level0" parent="." instance=ExtResource("2_hbyq2")]

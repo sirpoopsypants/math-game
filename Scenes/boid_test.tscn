@@ -1,0 +1,56 @@
+[gd_scene load_steps=5 format=3 uid="uid://bcu22lv64k6op"]
+
+[ext_resource type="Texture2D" uid="uid://etgw84cm4g7g" path="res://assets/afterimage.webp" id="1_05w7x"]
+[ext_resource type="Script" path="res://scripts/boid_test.gd" id="1_bn5kw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dkmri"]
+size = Vector2(345, 311)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_174v1"]
+radius = 1000.01
+
+[node name="boid" type="Area2D" groups=["boid"]]
+script = ExtResource("1_bn5kw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 2, 1)
+texture = ExtResource("1_05w7x")
+
+[node name="CollisionPolygon2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -27)
+shape = SubResource("RectangleShape2D_dkmri")
+
+[node name="vision" type="Node2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="vision"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="vision/Area2D"]
+position = Vector2(-100, -576)
+shape = SubResource("CircleShape2D_174v1")
+
+[node name="rayfolder" type="Node2D" parent="."]
+
+[node name="RayCast2D2" type="RayCast2D" parent="rayfolder"]
+position = Vector2(-1.61293e-12, 4.57764e-05)
+rotation = 3.03513
+scale = Vector2(16.9186, 11.1661)
+target_position = Vector2(-0.671128, 49.9684)
+
+[node name="RayCast2D3" type="RayCast2D" parent="rayfolder"]
+position = Vector2(-1.61293e-12, 4.57764e-05)
+rotation = 3.22886
+scale = Vector2(14.239, 9.397)
+target_position = Vector2(-0.312545, 45.8687)
+
+[node name="RayCast2D4" type="RayCast2D" parent="rayfolder"]
+position = Vector2(-1.61293e-12, 4.57764e-05)
+rotation = 1.91986
+scale = Vector2(16.9186, 11.1661)
+
+[node name="RayCast2D5" type="RayCast2D" parent="rayfolder"]
+position = Vector2(-1.61293e-12, 4.57764e-05)
+rotation = 4.46804
+scale = Vector2(16.9186, 11.1661)
+
+[connection signal="area_entered" from="vision/Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="vision/Area2D" to="." method="_on_area_2d_area_exited"]

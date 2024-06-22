@@ -1,0 +1,304 @@
+[gd_scene load_steps=29 format=3 uid="uid://qf3473eabek3"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_uxjt8"]
+[ext_resource type="Texture2D" uid="uid://bnv3tfc6r8onu" path="res://assets/triangle4png.png" id="2_fk4x1"]
+[ext_resource type="Texture2D" uid="uid://cqb83pl4dcdev" path="res://assets/light.webp" id="2_rhvxf"]
+[ext_resource type="Texture2D" uid="uid://t4ysr8exsjtr" path="res://assets/Drawing-3.sketchpad Cropped.png" id="3_8rajc"]
+[ext_resource type="Script" path="res://scripts/lights.gd" id="3_dg4s0"]
+[ext_resource type="Script" path="res://scripts/Scene_camera.gd" id="4_sbmke"]
+[ext_resource type="Texture2D" uid="uid://bukdtwk8hld2k" path="res://assets/Drawing-3.sketchpad.png" id="6_3e5y1"]
+[ext_resource type="PackedScene" uid="uid://ddj58eav37fy0" path="res://Scenes/trail.tscn" id="7_0u7um"]
+[ext_resource type="Texture2D" uid="uid://etgw84cm4g7g" path="res://assets/afterimage.webp" id="8_bwwkr"]
+[ext_resource type="Script" path="res://scripts/afterimage.gd" id="10_f6e8c"]
+[ext_resource type="Shader" path="res://shaders/chromatic.gdshader" id="11_tl5ep"]
+[ext_resource type="Shader" path="res://shaders/actualchromatic.gdshader" id="12_wtvaj"]
+
+[sub_resource type="Animation" id="Animation_ifj48"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 2, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_8gaak"]
+resource_name = "lights"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 2, 0), Color(1, 1, 2, 1), Color(1, 1, 2, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_axukg"]
+_data = {
+"RESET": SubResource("Animation_ifj48"),
+"lights": SubResource("Animation_8gaak")
+}
+
+[sub_resource type="Curve" id="Curve_0n5mb"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.516717, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_jo26t"]
+curve = SubResource("Curve_0n5mb")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_s7hrq"]
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+gravity = Vector3(0, 0, 0)
+linear_accel_max = 100.0
+scale_min = 0.3
+scale_max = 0.3
+alpha_curve = SubResource("CurveTexture_jo26t")
+
+[sub_resource type="Curve" id="Curve_680jt"]
+_data = [Vector2(0, 0.765906), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_g8ff7"]
+curve = SubResource("Curve_680jt")
+
+[sub_resource type="Curve" id="Curve_qdf2g"]
+max_value = 3.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.0833333, 1.65345), 0.0, 0.0, 0, 0, Vector2(1, 0.207161), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_yyndu"]
+curve = SubResource("Curve_qdf2g")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bb7gh"]
+lifetime_randomness = 0.5
+emission_shape_offset = Vector3(0, 40, 0)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 68.795
+emission_ring_inner_radius = 120.0
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -126.75
+radial_accel_min = 100.0
+radial_accel_max = 500.0
+scale_min = 0.1
+scale_max = 0.27
+scale_curve = SubResource("CurveTexture_yyndu")
+scale_over_velocity_max = 988.24
+alpha_curve = SubResource("CurveTexture_g8ff7")
+turbulence_noise_strength = 20.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_er86m"]
+shader = ExtResource("11_tl5ep")
+shader_parameter/strength = 0.1
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/radius = 0.0
+shader_parameter/aberration = 1.0
+shader_parameter/width = 0.0
+shader_parameter/feather = 0.0
+
+[sub_resource type="Animation" id="Animation_uts2m"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/feather")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:material:shader_parameter/width")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_rfnj4"]
+resource_name = "shockwave"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0.235, -0.25, 0, 0.25, 0, 0.49, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.4, 0.8)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/feather")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.15, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.6)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:material:shader_parameter/width")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.04, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.6)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3ppih"]
+_data = {
+"RESET": SubResource("Animation_uts2m"),
+"shockwave": SubResource("Animation_rfnj4")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mo1qf"]
+shader = ExtResource("12_wtvaj")
+shader_parameter/r_displacement = Vector2(6, 0)
+shader_parameter/g_displacement = Vector2(0, 0)
+shader_parameter/b_displacement = Vector2(-6, 0)
+shader_parameter/height = 0.7
+shader_parameter/width = 0.7
+shader_parameter/fade = 0.955
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_uxjt8")
+MAX_SPEED = 500
+ACCELERATION = 2000
+
+[node name="lights" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 2, 0)
+texture_filter = 2
+position = Vector2(0, -11.697)
+scale = Vector2(0.382, 0.382)
+texture = ExtResource("2_rhvxf")
+script = ExtResource("3_dg4s0")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="lights"]
+libraries = {
+"": SubResource("AnimationLibrary_axukg")
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
+top_level = true
+polygon = PackedVector2Array(-68, 37, 0, -78, 69, 38)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -12.485)
+scale = Vector2(0.129, 0.129)
+texture = ExtResource("2_fk4x1")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="Sprite2D"]
+modulate = Color(1, 1, 4, 0.259)
+show_behind_parent = true
+position = Vector2(0, -3.99225)
+scale = Vector2(7.75194, 7.75194)
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_s7hrq")
+texture = ExtResource("8_bwwkr")
+lifetime = 0.8
+local_coords = true
+trail_lifetime = 5.85
+script = ExtResource("10_f6e8c")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+energy = 0.9
+shadow_enabled = true
+texture = ExtResource("3_8rajc")
+offset = Vector2(-9.785, 59.085)
+texture_scale = 1.82
+
+[node name="Scene_camera" type="Camera2D" parent="."]
+unique_name_in_owner = true
+position_smoothing_speed = 1.0
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 0.0
+drag_top_margin = 0.0
+drag_right_margin = 0.0
+drag_bottom_margin = 0.0
+script = ExtResource("4_sbmke")
+
+[node name="dash_timer" type="Timer" parent="."]
+process_callback = 0
+one_shot = true
+
+[node name="dash_cooldown" type="Timer" parent="."]
+
+[node name="trail" parent="." instance=ExtResource("7_0u7um")]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+modulate = Color(1, 1, 1, 0.494118)
+rotation = 6.28319
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_bb7gh")
+texture = ExtResource("6_3e5y1")
+explosiveness = 1.0
+collision_base_size = 0.0
+trail_lifetime = 1.2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_er86m")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
+root_node = NodePath("../ColorRect")
+libraries = {
+"": SubResource("AnimationLibrary_3ppih")
+}
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer2"]
+material = SubResource("ShaderMaterial_mo1qf")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="timeout" from="dash_timer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="dash_timer" to="lights" method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="dash_cooldown" to="." method="_on_dash_cooldown_timeout"]
